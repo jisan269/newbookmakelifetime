@@ -20,7 +20,7 @@
         "17. trialUser444", 
         "18. premiumOne007", 
         "19. safeLockX11", 
-        "20. secretDoor222"
+        "20. fucassyou"
     ].map(key => key.split(". ")[1]); // Extracting actual keys for validation
 
     // Function to create the popup
