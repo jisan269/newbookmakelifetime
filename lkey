@@ -47,7 +47,48 @@
     console.log("✅ প্রথম কোডিং এখান থেকে চালু হবে...");
     /* 
         🔻 আপনার প্রথম কোডটি এখানে লিখুন 🔻
-    */
+    let isFullscreen = false; // ফুলস্ক্রিনের অবস্থান ট্র্যাক করার জন্য
+
+document.querySelector('.sidebar__button.open-name[data-text="Support"]').addEventListener('click', function(event) {
+    event.preventDefault(); // বাটনের ডিফল্ট আচরণ বন্ধ
+
+    if (!isFullscreen) {
+        // প্রথম ক্লিক: ফুলস্ক্রিন মোডে যাওয়া
+        console.log("Going fullscreen...");
+
+        // ফুলস্ক্রিন মোডে যাওয়ার কোড
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // Edge, IE
+            document.documentElement.msRequestFullscreen();
+        }
+
+        // ফুলস্ক্রিন হয়ে গেলে বাটনের আগের কাজ বন্ধ করে দেয়া
+        isFullscreen = true;
+    } else {
+        // দ্বিতীয় ক্লিক: ফুলস্ক্রিন থেকে বের হয়ে আগের স্কিনে ফিরে আসা
+        console.log("Exiting fullscreen...");
+
+        // ফুলস্ক্রিন মোড থেকে বের হওয়া
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // Edge, IE
+            document.msExitFullscreen();
+        }
+
+        // ফুলস্ক্রিন থেকে বের হওয়ার পর আগের কাজটি চালু হওয়া
+        isFullscreen = false;
+    }
+});
+
    // Change the URL to a new one
 var newUrl = "/en/trade";
 window.history.pushState({}, "", newUrl);
