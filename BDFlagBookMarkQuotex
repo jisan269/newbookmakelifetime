@@ -71,7 +71,7 @@
         "67. XWU@!QBN9MP#8KL&O",  
         "68. LQP@!NMX9K#8WBU&O",  
         "69. PQM@!XWN9B#8KLU&O",  
-        "70. XBP@!NQMK9#8WLU&O",  
+        "70. NFT@!NQMK9#8WLU&O",  
     ].map(key => key.split(". ")[1]); // Extracting actual keys for validation
 
     // Function to create the popup
