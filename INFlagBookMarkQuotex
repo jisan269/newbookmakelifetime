@@ -1,7 +1,7 @@
 (function () {
     // List of valid license keys with serial numbers
     const validLicenseKeys = [
-        "User 1: mortORscXtgE1NlXNq0C", "User 2: #vyG2HYj5ZE#plbluw8t", "User 3: 6IrRv1qtqVdXrB1qkWQJ", 
+        "User 1: mortORscXtgE1NlXNq0C", "User 2: URJ2HYj5ZE#plbluw8t", "User 3: 6IrRv1qtqVdXrB1qkWQJ", 
         "User 4: MyE67Vn442lMQ6p9G8cs", "User 5: i4IZfkEO8BTvpGwSgI@f", "User 6: PQXdN#7c0Eqy2mBOqppF", 
         "User 7: YVFovirmttbonlnoK8pB", "User 8: PqgDL5XvGxpGeExCFjYv", "User 9: iLqxAVGtvZcTuDYLC4@C", 
         "User 10: eFOvAb7Oq#ko8KsGVQqw", "User 11: kLqFOM4u6V9pG@TwEZB1", "User 12: NP7ZYqLpoW8TnFbMvRCJ", 
