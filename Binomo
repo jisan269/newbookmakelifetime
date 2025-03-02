@@ -1,0 +1,78 @@
+// "Demo account" টেক্সট পরিবর্তন করে "Real account" করা
+const accountNameElement = document.getElementById('account-name');
+if (accountNameElement) {
+  accountNameElement.textContent = 'Real account';
+} else {
+  console.error('Account name element not found!');
+}
+
+// রিফ্রেশ বাটন হাইড করা
+const refreshButton = document.getElementById('refresh-btn');
+if (refreshButton) {
+  refreshButton.style.display = 'none';
+} else {
+  console.error('Refresh button not found!');
+}
+(function() {
+    function applyChanges() {
+        let realAccountRadio = document.querySelector('input[type="radio"][value="-2"]');
+        let demoAccountRadio = document.querySelector('input[type="radio"][value="-1"]');
+
+        if (realAccountRadio && demoAccountRadio) {
+            // **রিয়েল অ্যাকাউন্টের রেডিও বাটনকে ভিজ্যুয়ালি সিলেক্ট করা (CSS দিয়ে)**
+            realAccountRadio.setAttribute('checked', 'true');
+            realAccountRadio.closest('.radio_md__3YrSA').classList.add('radio_checked__2JFGR');
+
+            // **ডেমো অ্যাকাউন্ট আসলেই সিলেক্টেড থাকবে**
+            demoAccountRadio.checked = true;
+            demoAccountRadio.closest('.radio_md__3YrSA').classList.remove('radio_checked__2JFGR');
+        }
+
+        // **কেউ ক্লিক করলে রিয়েল সিলেক্ট না হয়**
+        document.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('click', function(event) {
+                if (this.value === "-2") { // রিয়েল একাউন্ট সিলেক্ট হতে দেবে না
+                    event.preventDefault();
+                }
+            });
+        });
+
+        // **qa_trading_balance থেকে ব্যালেন্স সংগ্রহ করা**
+        let tradingBalanceElement = document.querySelector('#qa_trading_balance');
+        let tradingBalance = tradingBalanceElement ? tradingBalanceElement.textContent.trim() : "$0.00";
+
+        // **ডেমো ব্যালেন্সকে $0.00 করা**
+        let demoBalanceElement = document.querySelector('.type.ng-star-inserted:nth-child(2) p.balance');
+        if (demoBalanceElement) {
+            demoBalanceElement.textContent = "$10,000.00";
+        }
+
+        // **রিয়েল অ্যাকাউন্টের ব্যালেন্স আপডেট করা (qa_trading_balance এর ব্যালেন্স দেখাবে)**
+        let realBalanceElement = document.querySelector('.type.ng-star-inserted p.balance');
+        if (realBalanceElement) {
+            realBalanceElement.textContent = tradingBalance; // রিয়েল অ্যাকাউন্টে ট্রেডিং ব্যালেন্স দেখানো
+        }
+
+        // **Binocoins সবসময় 254 দেখাবে**
+        let binocoinsElement = document.querySelector('.balance .text-accent.ng-star-inserted');
+        if (binocoinsElement) {
+            binocoinsElement.textContent = "254";
+        }
+
+        console.log(`✅ রিয়েল ব্যালেন্স আপডেট: ${tradingBalance}, ডেমো এখন $0.00, এবং Binocoins = 254!`);
+    }
+
+    // **MutationObserver দিয়ে DOM পরিবর্তন পর্যবেক্ষণ করা**
+    let observer = new MutationObserver(() => {
+        applyChanges();
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // **প্রতি ২ সেকেন্ড পরপর কোড চালানো (যদি Observer মিস করে)**  
+    setInterval(() => {
+        applyChanges();
+    }, 2000);
+
+    console.log("🚀 Auto-Apply কোড চালু হয়েছে!");
+})();
