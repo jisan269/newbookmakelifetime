@@ -259,32 +259,65 @@ window.addEventListener("resize", updateTextForDevice);
                           let loadingWidth = 100;
                       
                           // **লসের জন্য পার্সেন্টেজ ক্যালকুলেশন**  
-                          if (isLoss) {
-                            if (lossAmount <= 20) loadingWidth = 70;
-                            else if (lossAmount >= 2000) loadingWidth = 3;
-                            else if (lossAmount >= 1800) loadingWidth = 10;
-                            else if (lossAmount >= 1700) loadingWidth = 15;
-                            else if (lossAmount >= 1400) loadingWidth = 20;
-                            else if (lossAmount >= 1000) loadingWidth = 25;
-                            else if (lossAmount >= 700) loadingWidth = 30;
-                            else if (lossAmount >= 500) loadingWidth = 35;
-                            else if (lossAmount >= 400) loadingWidth = 40;
-                            else if (lossAmount >= 300) loadingWidth = 45;
-                            else if (lossAmount >= 200) loadingWidth = 50;
-                            else if (lossAmount >= 100) loadingWidth = 55;
-                            else if (lossAmount >= 50) loadingWidth = 60;
-                      
-                            // **মাঝামাঝি মানগুলোর জন্য ক্যালকুলেশন**
-                            else {
-                              loadingWidth = 70 - (lossAmount / 20) * 2; // যেমন: -12$ → 74%
-                            }
-                          }
-                          else {
-                            // **প্রফিটের জন্য পার্সেন্টেজ ক্যালকুলেশন**
-                            if (absProfit <= 20) loadingWidth = 70;
-                            else if (absProfit <= 100) loadingWidth = 80;
-                            else if (absProfit <= 500) loadingWidth = 90;
-                            else if (absProfit <= 1000) loadingWidth = 100;
+      if (isLoss) {
+        if (lossAmount <= 20) loadingWidth = 70;
+        else if (lossAmount >= 2000) loadingWidth = 3;
+        else if (lossAmount >= 1800) loadingWidth = 10;
+        else if (lossAmount >= 1700) loadingWidth = 15;
+        else if (lossAmount >= 1400) loadingWidth = 20;
+        else if (lossAmount >= 1000) loadingWidth = 25;
+        else if (lossAmount >= 700) loadingWidth = 30;
+        else if (lossAmount >= 500) loadingWidth = 35;
+        else if (lossAmount >= 400) loadingWidth = 40;
+        else if (lossAmount >= 300) loadingWidth = 45;
+        else if (lossAmount >= 200) loadingWidth = 50;
+        else if (lossAmount >= 100) loadingWidth = 55;
+        else if (lossAmount >= 50) loadingWidth = 60;
+  
+        // **মাঝামাঝি মানগুলোর জন্য ক্যালকুলেশন**
+        else {
+          loadingWidth = 70 - (lossAmount / 20) * 2; // যেমন: -12$ → 74%
+        }
+      }
+      else {
+        // **প্রফিটের জন্য পার্সেন্টেজ ক্যালকুলেশন**
+        if (absProfit <= 10) loadingWidth = 0;
+        else if (absProfit <= 25) loadingWidth = 20;
+        else if (absProfit <= 46) loadingWidth = 23;
+        else if (absProfit <= 54) loadingWidth = 25;
+        else if (absProfit <= 75) loadingWidth = 28;
+        else if (absProfit <= 94) loadingWidth = 30;
+        else if (absProfit <= 134) loadingWidth = 33;
+        else if (absProfit <= 166) loadingWidth = 35;
+        else if (absProfit <= 232) loadingWidth = 38;
+        else if (absProfit <= 296) loadingWidth = 40;
+        else if (absProfit <= 325) loadingWidth = 43;
+        else if (absProfit <= 346) loadingWidth = 45;
+        else if (absProfit <= 354) loadingWidth = 48;
+        else if (absProfit <= 375) loadingWidth = 50;
+        else if (absProfit <= 394) loadingWidth = 53;
+        else if (absProfit <= 434) loadingWidth = 55;
+        else if (absProfit <= 466) loadingWidth = 58;
+        else if (absProfit <= 432) loadingWidth = 60;
+        else if (absProfit <= 496) loadingWidth = 63;
+        else if (absProfit <= 525) loadingWidth = 65;
+        else if (absProfit <= 546) loadingWidth = 68;
+        else if (absProfit <= 554) loadingWidth = 70;
+        else if (absProfit <= 575) loadingWidth = 73;
+        else if (absProfit <= 594) loadingWidth = 75;
+        else if (absProfit <= 634) loadingWidth = 78;
+        else if (absProfit <= 666) loadingWidth = 80;
+        else if (absProfit <= 732) loadingWidth = 83;
+        else if (absProfit <= 796) loadingWidth = 85;
+        else if (absProfit <= 825) loadingWidth = 87;
+        else if (absProfit <= 846) loadingWidth = 89;
+        else if (absProfit <= 854) loadingWidth = 91;
+        else if (absProfit <= 875) loadingWidth = 94;
+        else if (absProfit <= 894) loadingWidth = 96;
+        else if (absProfit <= 834) loadingWidth = 97;
+        else if (absProfit <= 966) loadingWidth = 98;
+        else if (absProfit <= 932) loadingWidth = 99;
+        else if (absProfit <= 996) loadingWidth = 100;
                       
                             // **মাঝামাঝি মানগুলোর জন্য প্রফিট পার্সেন্টেজ ক্যালকুলেশন**
                             else {
