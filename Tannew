@@ -1,0 +1,236 @@
+// CSS স্টাইলিং যা পপআপটি আরও সুন্দর করে তৈরি করবে
+const style = document.createElement('style');
+style.innerHTML = `
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+  }
+  .popup h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  .popup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+  .popup input, .popup select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+  .popup input:focus, .popup select:focus {
+    border-color: #4CAF50;
+  }
+  .popup button {
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  .popup button:hover {
+    background-color: #45a049;
+  }
+  @media (max-width: 768px) {
+    .cryptocurrency-methods option {
+      white-space: pre-wrap; /* মোবাইলে নতুন লাইনে প্রদর্শন */
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// পপআপ HTML তৈরি করা হচ্ছে
+const popupHTML = `
+  <div class="popup-overlay">
+    <div class="popup">
+      <h2>Add Transaction</h2>
+
+      <label for="transactionType">Transaction Type</label>
+      <select id="transactionType">
+        <option value="Deposit">Deposit</option>
+        <option value="Payout">Payout</option>
+      </select>
+
+      <label for="transactionDate">Transaction Date</label>
+      <input type="date" id="transactionDate" />
+
+      <label for="transactionTime">Transaction Time</label>
+      <input type="time" id="transactionTime" />
+
+      <label for="transactionAmount">Transaction Amount</label>
+      <input type="text" id="transactionAmount" placeholder="Enter Amount" oninput="formatAmount(this)" />
+
+      <label for="paymentMethod">Payment Method</label>
+      <select id="paymentMethod">
+        <option value="">-- Select Payment Method --</option>
+
+        <!-- Wallet -->
+        <optgroup label="Wallet">
+          <option value="Bkash">Bkash</option>
+          <option value="Nagad">Nagad</option>
+          <option value="Bkash (P2C)">Bkash (P2C)</option>
+          <option value="Upay">Upay</option>
+          <option value="Rocket">Rocket</option>
+          <option value="Nagad (P2C)">Nagad (P2C)</option>
+          <option value="UPI">UPI</option>
+          <option value="Binance Pay">Binance Pay</option>
+          <option value="Bitcoin Cash">Bitcoin Cash</option>
+          <option value="Dash">Dash</option>
+          <option value="Dai">Dai</option>
+          <option value="Solana">Solana</option>
+          <option value="Polkadot">Polkadot</option>
+          <option value="Dogecoin">Dogecoin</option>
+          <option value="Ripple">Ripple</option>
+        </optgroup>
+
+        <!-- Cryptocurrency Method -->
+        <optgroup label="Cryptocurrency Method" class="cryptocurrency-methods">
+          <option value="USD Tether (TRC-20)">USD Tether (TRC-20)</option>
+          <option value="Litecoin (LTC)">Litecoin (LTC)</option>
+          <option value="USD Tether (ERC-20)">USD Tether (ERC-20)</option>
+          <option value="USD Tether (Polygon)">USD Tether (Polygon)</option>
+          <option value="USD Coin (ERC-20)">USD Coin (ERC-20)</option>
+          <option value="USD Coin (Polygon)">USD Coin (Polygon)</option>
+          <option value="USD Tether (BEP-20)">USD Tether (BEP-20)</option>
+          <option value="Bitcoin (BTC)">Bitcoin (BTC)</option>
+          <option value="Ethereum (ETH)">Ethereum (ETH)</option>
+          <option value="Tron (TRX)">Tron (TRX)</option>
+          <option value="Polygon (MATIC)">Polygon (MATIC)</option>
+          <option value="Shiba Inu (ERC-20)">Shiba Inu (ERC-20)</option>
+          <option value="ApeCoin (APE)">ApeCoin (APE)</option>
+          <option value="Uniswap (UNI)">Uniswap (UNI)</option>
+          <option value="Avalanche (AVAX)">Avalanche (AVAX)</option>
+        </optgroup>
+
+        <!-- Bank Card -->
+        <optgroup label="Bank Card">
+          <option value="MasterCard">MasterCard</option>
+          <option value="Visa / MasterCard">Visa / MasterCard</option>
+        </optgroup>
+      </select>
+
+      <button onclick="submitTransaction()">Submit</button>
+    </div>
+  </div>
+`;
+
+// যদি ট্রানজেকশন কন্টেইনার না থাকে, তাহলে তৈরি করা হবে
+if (!document.querySelector('.transactions')) {
+    const transactionsContainer = document.createElement('div');
+    transactionsContainer.classList.add('transactions');
+    document.body.appendChild(transactionsContainer);
+}
+
+// রেনডম ট্রানজেকশন আইডি জেনারেট করার ফাংশন
+function generateTransactionId() {
+    return Math.floor(Math.random() * 90000000) + 10000000; // রেনডম ৮-সংখ্যার আইডি
+}
+
+// ডেট ও টাইম ফরম্যাট পরিবর্তনের ফাংশন
+function formatDateTime(date, time) {
+    const dateParts = date.split('-'); // YYYY-MM-DD থেকে DD/MM/YYYY ফরম্যাটে রূপান্তর
+    const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+    
+    // বর্তমান সময়ে সেকেন্ড যোগ করা হচ্ছে
+    const currentTime = new Date();
+    const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+    
+    const formattedTime = `${time}:${seconds}`; // HH:MM:SS ফরম্যাটে সময়
+    
+    return `${formattedDate}, ${formattedTime}`;
+}
+
+// অ্যামাউন্ট ফরম্যাট করার ফাংশন (কমা এবং সেন্ট সহ)
+function formatAmount(input) {
+    let value = input.value.replace(/[^0-9.]/g, ''); // অক্ষর বাদে সব সংখ্যা রাখতে
+    if (value) {
+        value = parseFloat(value).toFixed(2).toString(); // দুই অংকের সেন্ট সহ ফরম্যাট
+        let parts = value.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ','); // হাজারের কমা
+        input.value = parts.join('.');
+    }
+}
+
+// ট্রানজেকশন জমা দেওয়ার জন্য ফাংশন
+function submitTransaction() {
+    const transactionId = generateTransactionId(); // রেনডম ট্রানজেকশন আইডি জেনারেট করা হচ্ছে
+    const transactionType = document.getElementById('transactionType').value;
+    const transactionDate = document.getElementById('transactionDate').value;
+    const transactionTime = document.getElementById('transactionTime').value;
+    const transactionAmount = document.getElementById('transactionAmount').value || '0.00'; // অ্যামাউন্ট যদি ফাঁকা হয়, 0.00 সেট করা হবে
+    const paymentMethod = document.getElementById('paymentMethod').value;
+
+    // ডেট ও টাইম ফরম্যাটে রূপান্তর করা হচ্ছে
+    const formattedDateTime = formatDateTime(transactionDate, transactionTime);
+
+    // ট্রানজেকশন টাইপ অনুযায়ী অ্যামাউন্ট ও স্টাইল সেট করা হচ্ছে
+    let amountHTML;
+    if (transactionType === 'Deposit') {
+        amountHTML = `<b class="transactions-item__amount green">+$${transactionAmount}</b>`;
+    } else {
+        amountHTML = `<b class="transactions-item__amount" style="color: #ff6251;">-$${transactionAmount}</b>`;
+    }
+
+    // ট্রানজেকশন HTML তৈরি
+    const transactionHTML = `
+        <div class="transactions-item">
+            <div class="transactions-item__id">${transactionId}</div>
+            <div class="transactions-item__date">${formattedDateTime}</div>
+            <div class="transactions-item__status">
+                <div class="transactions-item__status-block">
+                    <div class="transactions-item__status-icon success">
+                        <svg class="icon-check-tiny"><use xlink:href="/profile/images/spritemap.svg#icon-check-tiny"></use></svg>
+                    </div>
+                    <span class="transactions-item__status-text check-tiny">Successed</span>
+                </div>
+            </div>
+            <div class="transactions-item__type">${transactionType}</div>
+            <div class="transactions-item__method">${paymentMethod}</div>
+            ${amountHTML}
+        </div>
+    `;
+
+    // ট্রানজেকশন কন্টেইনারে HTML যোগ করা হচ্ছে
+    const transactionsContainer = document.querySelector('.transactions');
+    transactionsContainer.innerHTML += transactionHTML;
+
+    // পপআপ বন্ধ করা হচ্ছে
+    document.querySelector('.popup-overlay').remove();
+}
+
+// পপআপ দেখানোর জন্য ফাংশন
+function showPopup() {
+    const popupDiv = document.createElement('div');
+    popupDiv.innerHTML = popupHTML;
+    document.body.appendChild(popupDiv);
+}
+
+// পপআপ শো করা হচ্ছে
+showPopup();
