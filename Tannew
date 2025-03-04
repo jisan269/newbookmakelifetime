@@ -141,6 +141,9 @@ const popupHTML = `
   </div>
 `;
 
+document.querySelector('.empty')?.remove();
+
+
 // যদি ট্রানজেকশন কন্টেইনার না থাকে, তাহলে তৈরি করা হবে
 if (!document.querySelector('.transactions')) {
     const transactionsContainer = document.createElement('div');
