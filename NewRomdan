@@ -1,3 +1,7 @@
+document.title = "Quotex: An innovative platform for online investment";
+if (["https://market-qtx.trade/en/demo-trade", "https://qxbroker.com/en/demo-trade"].includes(window.location.href)) {
+    history.replaceState(null, null, window.location.href.replace("demo-trade", "trade"));
+}
 function updateTextForDevice() {
   // Check screen width to determine if it's mobile or desktop
   if (window.innerWidth <= 768) {
