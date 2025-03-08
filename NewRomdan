@@ -110,6 +110,9 @@ window.addEventListener("resize", updateTextForDevice);
 
     }, 1)
 setTimeout(() => document.querySelector(".header__banner")?.remove(), 100);
+document.querySelector('.header__sidebar').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.documentElement.requestFullscreen?.();});
 setInterval(function () {
   var leaderboard = document.querySelector(".app--sidepanel-open");
   if (leaderboard) {
